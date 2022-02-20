@@ -23,12 +23,12 @@
 
                             <div class="form-group">
                                 <label for="title">Название</label>
-                                <input type="text" class="form-control" id="title" name="title" required>
+                                <input type="text" class="form-control" value="{{ old('title') }}" id="title" name="title" required autofocus>
                             </div>
 
                             <div class="form-group mt-3">
                                 <label for="description">Описание</label>
-                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                                <textarea class="form-control" id="description" name="description" rows="3">{{ old('description') }}</textarea>
                             </div>
 
                             <div class="form-group mt-3">
@@ -55,9 +55,10 @@
                             <level-tests-input></level-tests-input>
 
                             <div class="form-group mt-3">
-                                <label for="visible_count">Количество видимых тестов</label>
-                                <input type="number" class="form-control" id="visible_count" name="visible_count"
-                                       required>
+                                <label for="visible_tests_count">Количество видимых тестов</label>
+                                <input type="number" class="form-control" id="visible_tests_count" name="visible_tests_count"
+                                       min="0"
+                                       value="{{ old('visible_tests_count') }}" required>
 
                                 <small class="small text-secondary">Игрокам будут видны первые тесты из тех, что вы
                                     ввели в таблицу</small>

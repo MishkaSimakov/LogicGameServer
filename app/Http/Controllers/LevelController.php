@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLevelRequest;
 use App\Models\Level;
+use App\Models\LevelTransput;
 use App\Models\LogicalComponent;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,7 @@ class LevelController extends Controller
 
     public function store(StoreLevelRequest $request)
     {
-        $level = Level::create($request->only(['title', 'description']));
+        $level = Level::create($request->only(['title', 'description', 'visible_tests_count']));
 
         foreach ($request->get('allowed_components') as $allowed_component) {
             $level->allowedComponents()->attach(json_decode($allowed_component)->key);
@@ -49,6 +50,68 @@ class LevelController extends Controller
             ]);
         }
 
+        for ($i = 0; $i < count($request->get('test_inputs')); $i++) {
+            $test = $level->tests()->create([
+                'order' => $i
+            ]);
+
+            foreach ($request->get('test_inputs')[$i] as $transput => $value) {
+                $test_value = $test->values()->make([
+                    'value' => $value == "on"
+                ]);
+
+                $test_value->transput()->associate(
+                    LevelTransput::where('level_id', $level->id)
+                        ->where('type', Level::INPUT)
+                        ->where('name', $transput)->first()
+                );
+
+                $test_value->save();
+            }
+            foreach ($request->get('test_outputs')[$i] as $transput => $value) {
+                $test_value = $test->values()->make([
+                    'value' => $value == "on"
+                ]);
+
+                $test_value->transput()->associate(
+                    LevelTransput::where('level_id', $level->id)
+                        ->where('type', Level::OUTPUT)
+                        ->where('name', $transput)->first()
+                );
+
+                $test_value->save();
+            }
+        }
+
         return redirect($level->url);
+    }
+
+    public function destroy(Level $level)
+    {
+        Level::where('order', '>', $level->order)->get()->each->decrement('order');
+
+        $level->delete();
+
+        return redirect()->route('level.index');
+    }
+
+    public function moveUp(Level $level)
+    {
+        if (($levels = Level::where('order', '=', $level->order - 1))->count() > 0) {
+            $levels->latest('order')->first()->increment('order');
+            $level->decrement('order');
+        }
+
+        return redirect()->route('level.index');
+    }
+
+    public function moveDown(Level $level)
+    {
+        if (($levels = Level::where('order', '=', $level->order + 1))->count() > 0) {
+            $levels->first()->decrement('order');
+            $level->increment('order');
+        }
+
+        return redirect()->route('level.index');
     }
 }

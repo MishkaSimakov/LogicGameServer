@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,7 +15,14 @@ class Level extends Model
     const INPUT = 'input';
     const OUTPUT = 'output';
 
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['title', 'description', 'visible_tests_count'];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('ordered', function (Builder $builder) {
+            $builder->orderBy('order', 'asc');
+        });
+    }
 
     public function getUrlAttribute()
     {
@@ -39,5 +47,10 @@ class Level extends Model
     public function outputs(): HasMany
     {
         return $this->transputs()->where('type', self::OUTPUT);
+    }
+
+    public function tests(): HasMany
+    {
+        return $this->hasMany(LevelTest::class);
     }
 }

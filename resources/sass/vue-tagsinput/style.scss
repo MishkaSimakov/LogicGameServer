@@ -115,7 +115,8 @@
 /* Typeahead elements style/theme */
 .tags-input-typeahead-item-default {
     color: #fff;
-    background-color: #343a40;
+    //background-color: #343a40;
+    @extend .bg-secondary;
 }
 
 .tags-input-typeahead-item-highlighted-default {

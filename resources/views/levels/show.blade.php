@@ -19,9 +19,44 @@
                             <b>Входы:</b> {{ $level->inputs()->pluck('name')->implode(', ') }}<br>
                             <b>Выходы:</b> {{ $level->outputs()->pluck('name')->implode(', ') }}
                         </p>
+
+                        <div class="mt-3">
+                            <p><b>Тесты</b></p>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        @foreach($level->inputs as $input)
+                                            <th class="col">{{ $input->name }}</th>
+                                        @endforeach
+                                        @foreach($level->outputs as $output)
+                                            <th class="col">{{ $output->name }}</th>
+                                        @endforeach
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    @foreach($level->tests as $test)
+                                        <tr>
+                                            @foreach($test->values as $value)
+                                                <td>
+                                                    <input
+                                                        type="checkbox"
+                                                        @if ($value->value) checked @endif
+                                                        style="pointer-events: none;"
+                                                        onclick="return false;"
+                                                    />
+                                                </td>
+                                            @endforeach
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 @endsection

@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->id();
 
             $table->foreignId('level_id');
+            $table->integer('order')->nullable();
+            $table->string('description')->nullable();
 
             $table->timestamps();
 

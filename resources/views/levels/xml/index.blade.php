@@ -1,3 +1,4 @@
+{!! '<?xml version="1.0" encoding="UTF-8"?>' !!}
 <levels>
     @foreach($levels as $level)
         <level passed="false" id="{{ $level->id }}">
@@ -19,23 +20,17 @@
                     <output>{{ $input->name }}</output>
                 @endforeach
             </inputs>
-            <tests visible_count="4">
-                <test>
-                    <input>0 0</input>
-                    <output>0</output>
-                </test>
-                <test>
-                    <input>0 1</input>
-                    <output>0</output>
-                </test>
-                <test>
-                    <input>1 0</input>
-                    <output>0</output>
-                </test>
-                <test>
-                    <input>1 1</input>
-                    <output>1</output>
-                </test>
+            <tests visible_count="{{ $level->visible_tests_count }}">
+                @foreach($level->tests as $test)
+                    <test>
+                        @foreach($test->values()->input()->get() as $value)
+                            <input for="{{ $value->transput->name }}">{{ $value->value }}</input>
+                        @endforeach
+                        @foreach($test->values()->output()->get() as $value)
+                            <output for="{{ $value->transput->name }}">{{ $value->value }}</output>
+                        @endforeach
+                    </test>
+                @endforeach
             </tests>
         </level>
     @endforeach

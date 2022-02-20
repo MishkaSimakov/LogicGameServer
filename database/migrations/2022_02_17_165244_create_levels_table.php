@@ -18,6 +18,9 @@ return new class extends Migration
 
             $table->string('title');
             $table->text('description');
+            $table->integer('visible_tests_count');
+
+            $table->integer('order');
 
             $table->timestamps();
         });

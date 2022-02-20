@@ -19,6 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('level', LevelController::class);
+Route::resource('level', LevelController::class)->middleware('auth');
+
+Route::get('level/{level}/moveup', [LevelController::class, 'moveUp'])->middleware('auth')->name('level.move-up');
+Route::get('level/{level}/movedown', [LevelController::class, 'moveDown'])->middleware('auth')->name('level.move-down');
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);
