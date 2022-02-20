@@ -33,18 +33,5 @@ class DatabaseSeeder extends Seeder
                 'name' => $logical_component
             ]);
         }
-
-        // create levels
-        Level::factory()->count(10)
-            ->hasTransputs(5, [
-                'type' => Level::INPUT
-            ])
-            ->hasTransputs(5, [
-                'type' => Level::OUTPUT
-            ])
-            ->create()
-            ->each(function (Level $level) {
-                $level->allowedComponents()->saveMany(LogicalComponent::inRandomOrder()->take(2)->get());
-            });
     }
 }
