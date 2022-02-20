@@ -5,15 +5,19 @@
             <description>{{ $level->description }}</description>
 
             <allowed_components>
-                <component>And</component>
-                <component>Or</component>
+                @foreach($level->allowedComponents as $component)
+                    <component>{{ $component->name }}</component>
+                @endforeach
             </allowed_components>
             <outputs>
-                <output>OUT</output>
+                @foreach($level->outputs as $output)
+                    <output>{{ $output->name }}</output>
+                @endforeach
             </outputs>
             <inputs>
-                <input>A</input>
-                <input>B</input>
+                @foreach($level->inputs as $input)
+                    <output>{{ $input->name }}</output>
+                @endforeach
             </inputs>
             <tests visible_count="4">
                 <test>

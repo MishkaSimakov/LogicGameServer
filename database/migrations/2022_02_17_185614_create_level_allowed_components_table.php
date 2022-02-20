@@ -18,9 +18,9 @@ return new class extends Migration {
             $table->foreignId('level_id');
             $table->foreignId('logical_component_id');
 
-            $table->foreign('level_id')->on('levels')->onDelete('cascade');
-            $table->foreign('logical_component_id')
-                ->on('logical_components')
+            $table->foreign('level_id')->on('levels')->references('id')
+                ->onDelete('cascade');
+            $table->foreign('logical_component_id')->on('logical_components')->references('id')
                 ->onDelete('cascade');
         });
     }

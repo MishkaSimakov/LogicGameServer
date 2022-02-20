@@ -25,7 +25,10 @@ class StoreLevelRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:100'],
-            'description' => ['required', 'string']
+            'description' => ['required', 'string'],
+            'inputs' => ['required', 'array'],
+            'outputs' => ['required', 'array'],
+            'visible_count' => ['required', 'integer', 'min:0']
         ];
     }
 }

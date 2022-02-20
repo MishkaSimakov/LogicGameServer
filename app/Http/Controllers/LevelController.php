@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLevelRequest;
 use App\Models\Level;
-use Illuminate\Http\Request;
+use App\Models\LogicalComponent;
 
 class LevelController extends Controller
 {
@@ -22,11 +22,15 @@ class LevelController extends Controller
 
     public function create()
     {
-        return view('levels.create');
+        $logical_components = LogicalComponent::all();
+
+        return view('levels.create', compact('logical_components'));
     }
 
     public function store(StoreLevelRequest $request)
     {
+        dd($request->validated());
+
         $level = Level::create($request->validated());
 
         return redirect($level->url);

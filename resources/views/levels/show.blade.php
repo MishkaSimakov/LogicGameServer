@@ -8,7 +8,17 @@
                     <div class="card-header">{{ $level->title }}</div>
 
                     <div class="card-body">
-                        {{ $level->description }}
+                        <p>
+                            <b>Описание:</b> {{ $level->description }}
+                        </p>
+                        <p>
+                            <b>Разрешённые логические
+                                компоненты:</b> {{ $level->allowedComponents()->pluck('name')->implode(', ') }}
+                        </p>
+                        <p>
+                            <b>Входы:</b> {{ $level->inputs()->pluck('name')->implode(', ') }}<br>
+                            <b>Выходы:</b> {{ $level->outputs()->pluck('name')->implode(', ') }}
+                        </p>
                     </div>
                 </div>
             </div>

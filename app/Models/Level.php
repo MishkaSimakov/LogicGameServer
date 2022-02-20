@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Level extends Model
 {
@@ -23,5 +24,20 @@ class Level extends Model
     public function allowedComponents(): BelongsToMany
     {
         return $this->belongsToMany(LogicalComponent::class, 'level_allowed_components');
+    }
+
+    public function transputs(): HasMany
+    {
+        return $this->hasMany(LevelTransput::class);
+    }
+
+    public function inputs(): HasMany
+    {
+        return $this->transputs()->where('type', self::INPUT);
+    }
+
+    public function outputs(): HasMany
+    {
+        return $this->transputs()->where('type', self::OUTPUT);
     }
 }
