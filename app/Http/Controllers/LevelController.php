@@ -31,7 +31,12 @@ class LevelController extends Controller
 
     public function store(StoreLevelRequest $request)
     {
-        $level = Level::create($request->only(['title', 'description', 'visible_tests_count']));
+        $level = Level::create(array_merge(
+            $request->only(['title', 'description', 'visible_tests_count']),
+            [
+                'order' => Level::latest()->first()->order + 1
+            ]
+        ));
 
         foreach ($request->get('allowed_components') as $allowed_component) {
             $level->allowedComponents()->attach(json_decode($allowed_component)->key);

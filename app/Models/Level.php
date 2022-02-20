@@ -15,7 +15,7 @@ class Level extends Model
     const INPUT = 'input';
     const OUTPUT = 'output';
 
-    protected $fillable = ['title', 'description', 'visible_tests_count'];
+    protected $fillable = ['title', 'description', 'visible_tests_count', 'order'];
 
     protected static function booted()
     {
