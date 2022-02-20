@@ -11,6 +11,16 @@
                         <form method="POST" action="{{ route('level.store') }}">
                             @csrf
 
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
                             <div class="form-group">
                                 <label for="title">Название</label>
                                 <input type="text" class="form-control" id="title" name="title" required>
@@ -26,15 +36,15 @@
                                 <tags-input wrapper-class="form-control" placeholder=""
                                             v-bind:existing-tags="[
                                                 @foreach($logical_components as $logical_component)
-                                                    {
-                                                        key: {{ $logical_component->id }},
+                                                {
+                                                    key: {{ $logical_component->id }},
                                                         value: '{{ $logical_component->name }}'
                                                     }
                                                     @if(!$loop->last)
-                                                        ,
-                                                    @endif
-                                                @endforeach
-                                            ]"
+                                                ,
+@endif
+                                            @endforeach
+                                                ]"
                                             :typeahead="true"
                                             :typeahead-always-show="true"
                                             :only-existing-tags="true"
@@ -42,17 +52,7 @@
                                             element-id="allowed_components"></tags-input>
                             </div>
 
-                            <div class="form-group mt-3">
-                                <label for="inputs">Входы</label>
-                                <tags-input wrapper-class="form-control" placeholder=""
-                                            element-id="inputs"></tags-input>
-                            </div>
-
-                            <div class="form-group mt-3">
-                                <label for="outputs">Выходы</label>
-                                <tags-input wrapper-class="form-control" placeholder=""
-                                            element-id="outputs"></tags-input>
-                            </div>
+                            <level-tests-input></level-tests-input>
 
                             <div class="form-group mt-3">
                                 <label for="visible_count">Количество видимых тестов</label>
