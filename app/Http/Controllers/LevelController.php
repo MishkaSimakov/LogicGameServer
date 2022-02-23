@@ -55,36 +55,38 @@ class LevelController extends Controller
             ]);
         }
 
-        for ($i = 0; $i < count($request->get('test_inputs')); $i++) {
-            $test = $level->tests()->create([
-                'order' => $i
-            ]);
-
-            foreach ($request->get('test_inputs')[$i] as $transput => $value) {
-                $test_value = $test->values()->make([
-                    'value' => $value == "on"
+        if ($request->exists('test_inputs')) {
+            for ($i = 0; $i < count($request->get('test_inputs')); $i++) {
+                $test = $level->tests()->create([
+                    'order' => $i
                 ]);
 
-                $test_value->transput()->associate(
-                    LevelTransput::where('level_id', $level->id)
-                        ->where('type', Level::INPUT)
-                        ->where('name', $transput)->first()
-                );
+                foreach ($request->get('test_inputs')[$i] as $transput => $value) {
+                    $test_value = $test->values()->make([
+                        'value' => $value == "on"
+                    ]);
 
-                $test_value->save();
-            }
-            foreach ($request->get('test_outputs')[$i] as $transput => $value) {
-                $test_value = $test->values()->make([
-                    'value' => $value == "on"
-                ]);
+                    $test_value->transput()->associate(
+                        LevelTransput::where('level_id', $level->id)
+                            ->where('type', Level::INPUT)
+                            ->where('name', $transput)->first()
+                    );
 
-                $test_value->transput()->associate(
-                    LevelTransput::where('level_id', $level->id)
-                        ->where('type', Level::OUTPUT)
-                        ->where('name', $transput)->first()
-                );
+                    $test_value->save();
+                }
+                foreach ($request->get('test_outputs')[$i] as $transput => $value) {
+                    $test_value = $test->values()->make([
+                        'value' => $value == "on"
+                    ]);
 
-                $test_value->save();
+                    $test_value->transput()->associate(
+                        LevelTransput::where('level_id', $level->id)
+                            ->where('type', Level::OUTPUT)
+                            ->where('name', $transput)->first()
+                    );
+
+                    $test_value->save();
+                }
             }
         }
 
