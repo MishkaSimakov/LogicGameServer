@@ -34,7 +34,7 @@ class LevelController extends Controller
         $level = Level::create(array_merge(
             $request->only(['title', 'description', 'visible_tests_count']),
             [
-                'order' => Level::latest()->first()->order + 1
+                'order' => Level::count()
             ]
         ));
 

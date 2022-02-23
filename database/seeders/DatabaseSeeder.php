@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Level;
-use App\Models\LevelTransput;
 use App\Models\LogicalComponent;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -26,11 +24,16 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // create logical components
-        $logical_components = ['И', 'ИЛИ', 'НЕ'];
+        $logical_components = [
+            'And' => 'И',
+            'Or' => 'ИЛИ',
+            'Not' => 'НЕ'
+        ];
 
-        foreach ($logical_components as $logical_component) {
+        foreach ($logical_components as $slug => $name) {
             LogicalComponent::create([
-                'name' => $logical_component
+                'slug' => $slug,
+                'name' => $name
             ]);
         }
     }

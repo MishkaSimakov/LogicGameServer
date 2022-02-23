@@ -7,7 +7,7 @@
 
             <allowed_components>
                 @foreach($level->allowedComponents as $component)
-                    <component>{{ $component->name }}</component>
+                    <component>{{ $component->slug }}</component>
                 @endforeach
             </allowed_components>
             <outputs>
