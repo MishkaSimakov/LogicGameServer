@@ -24,9 +24,10 @@ class DatabaseSeeder extends Seeder
 
         // create logical components
         $logical_components = [
-            'And' => 'И',
-            'Or' => 'ИЛИ',
-            'Not' => 'НЕ'
+            'and' => 'И',
+            'or' => 'ИЛИ',
+            'not' => 'НЕ',
+            'xor' => 'XOR'
         ];
 
         foreach ($logical_components as $slug => $name) {
