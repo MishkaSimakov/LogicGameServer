@@ -28,7 +28,7 @@
 
                             <div class="form-group mt-3">
                                 <label for="description">Описание</label>
-                                <textarea class="form-control" id="description" name="description" rows="3">{{ old('description') }}</textarea>
+                                <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
                             </div>
 
                             <div class="form-group mt-3">
