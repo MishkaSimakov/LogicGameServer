@@ -10,4 +10,12 @@ class LevelTransput extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'type'];
+
+    public function getAsTagsAttribute()
+    {
+        return [
+            'key' => '',
+            'value' => $this->name
+        ];
+    }
 }

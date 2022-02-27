@@ -93,6 +93,13 @@ class LevelController extends Controller
         return redirect($level->url);
     }
 
+    public function edit(Level $level)
+    {
+        $logical_components = LogicalComponent::all();
+
+        return view('levels.edit', compact('level', 'logical_components'));
+    }
+
     public function destroy(Level $level)
     {
         Level::where('order', '>', $level->order)->get()->each->decrement('order');

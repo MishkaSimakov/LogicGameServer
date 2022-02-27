@@ -16,4 +16,9 @@ class LevelTest extends Model
     {
         return $this->hasMany(LevelTestValue::class);
     }
+
+    public function getAsBooleanArrayAttribute()
+    {
+        return $this->values->map->value;
+    }
 }

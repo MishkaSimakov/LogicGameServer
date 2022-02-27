@@ -30,7 +30,7 @@
                     </thead>
 
                     <tbody>
-                    <tr v-for="row in rows_count">
+                    <tr v-for="row in rowsCount">
                         <td style="position: relative; padding: 0;" v-for="col in (inputs.length + outputs.length)">
                             <input type="hidden" value="off" :name="getCheckboxName(row, col)">
 
@@ -39,25 +39,31 @@
                                 :for="getCheckboxName(row, col)"
                             ></label>
                             <input class="m-3" type="checkbox" :name="getCheckboxName(row, col)"
-                                   :id="getCheckboxName(row, col)">
+                                   :id="getCheckboxName(row, col)" v-model="tests[row - 1][col - 1]">
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
 
-            <a href="#" class="btn-secondary btn btn-sm" v-on:click.prevent="rows_count++">Добавить тест</a>
+            <a href="#" class="btn-secondary btn btn-sm" v-on:click.prevent="addTest">Добавить тест</a>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    props: {
+        inputsValue: Array,
+        outputsValue: Array,
+        testsValue: Array
+    },
     data() {
         return {
             inputs: [],
             outputs: [],
-            rows_count: 0
+            tests: [],
+            rowsCount: 0,
         }
     },
     methods: {
@@ -68,8 +74,19 @@ export default {
             return "test_outputs[" + (row - 1) + "][" + this.outputs[col - this.inputs.length - 1].value + "]"
         },
         switchCheckbox(row, col) {
-            document.getElementById(this.getCheckboxName(row, col)).checked = !document.getElementById(this.getCheckboxName(row, col)).checked;
+            this.tests[row - 1][col - 1] = !this.tests[row - 1][col - 1]
+        },
+        addTest() {
+            this.tests[this.rowsCount] = [];
+            this.rowsCount++;
         }
+    },
+    beforeMount() {
+        this.inputs = this.inputsValue
+        this.outputs = this.outputsValue
+
+        this.tests = this.testsValue
+        this.rowsCount = this.tests.length
     }
 }
 </script>
