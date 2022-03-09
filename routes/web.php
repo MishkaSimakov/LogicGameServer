@@ -15,9 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome')->name('main');
+Route::view('/download', 'download')->name('download');
 
 Route::resource('level', LevelController::class)->middleware('auth');
 

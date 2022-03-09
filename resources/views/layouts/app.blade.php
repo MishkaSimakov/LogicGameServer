@@ -40,6 +40,10 @@
                             <a class="nav-link" href="{{ route('level.index') }}">Уровни</a>
                         </li>
                     @endauth
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('download') }}">Скачать</a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

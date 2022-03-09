@@ -32,7 +32,7 @@
                                 <label for="description">Описание</label>
                                 <textarea
                                     class="form-control" id="description"
-                                    name="description"
+                                    name="description" required
                                 >{{ old('description') ?? $level->description }}</textarea>
                             </div>
 
@@ -44,7 +44,7 @@
                             <level-tests-input
                                 :inputs-value='@json($level->inputs->map->asTags)'
                                 :outputs-value='@json($level->outputs->map->asTags)'
-                                value='@json($level->tests->map->asBooleanArray)'
+                                :tests-value='@json($level->tests->map->asBooleanArray)'
                             ></level-tests-input>
 
                             <div class="form-group mt-3">

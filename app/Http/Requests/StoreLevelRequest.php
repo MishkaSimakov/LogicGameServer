@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\NotGreaterThanArraySizeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLevelRequest extends FormRequest
@@ -31,7 +32,7 @@ class StoreLevelRequest extends FormRequest
             'outputs' => ['required', 'array'],
             'test_inputs' => ['nullable', 'array'],
             'test_outputs' => ['nullable', 'array'],
-            'visible_tests_count' => ['required', 'integer', 'min:0']
+            'visible_tests_count' => ['required', 'integer', 'min:0', new NotGreaterThanArraySizeRule('test_inputs')]
         ];
     }
 }

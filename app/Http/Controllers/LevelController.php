@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLevelRequest;
+use App\Http\Requests\UpdateLevelRequest;
 use App\Models\Level;
-use App\Models\LevelTransput;
 use App\Models\LogicalComponent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class LevelController extends Controller
 {
@@ -53,11 +52,11 @@ class LevelController extends Controller
         return view('levels.edit', compact('level', 'logical_components'));
     }
 
-    public function update(Request $request)
+    public function update(UpdateLevelRequest $request, Level $level)
     {
-        $level = Level::updateFrom($request->only(['title', 'description', 'visible_tests_count']));
+        $level->update($request->only(['title', 'description', 'visible_tests_count']));
 
-        $level->allowedComponents()->delete();
+        $level->allowedComponents()->sync([]);
         $level->transputs()->delete();
         $level->tests()->delete();
 

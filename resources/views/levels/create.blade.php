@@ -30,7 +30,7 @@
                             <div class="form-group mt-3">
                                 <label for="description">Описание</label>
                                 <textarea class="form-control" id="description"
-                                          name="description">{{ old('description') }}</textarea>
+                                          name="description" required>{{ old('description') }}</textarea>
                             </div>
 
                             <level-allowed-components-input
