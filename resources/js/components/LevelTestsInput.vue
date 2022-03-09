@@ -82,10 +82,13 @@ export default {
         }
     },
     beforeMount() {
-        this.inputs = this.inputsValue
-        this.outputs = this.outputsValue
+        this.inputs = this.inputsValue ?? []
+        this.outputs = this.outputsValue ?? []
 
-        this.tests = this.testsValue
+        this.tests = this.testsValue ?? []
+
+        // console.log(this.testsValue)
+
         this.rowsCount = this.tests.length
     }
 }

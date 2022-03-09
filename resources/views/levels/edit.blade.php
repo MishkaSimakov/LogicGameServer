@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ $level->title }}</div>
+                    <div class="card-header">Редактировать уровень</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('level.update', compact('level')) }}">
@@ -58,7 +58,7 @@
                                     ввели в таблицу</small>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mt-3">Создать</button>
+                            <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
                         </form>
                     </div>
                 </div>

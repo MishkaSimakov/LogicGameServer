@@ -7,6 +7,7 @@ use App\Models\Level;
 use App\Models\LevelTransput;
 use App\Models\LogicalComponent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class LevelController extends Controller
 {
@@ -38,57 +39,9 @@ class LevelController extends Controller
             ]
         ));
 
-        foreach ($request->get('allowed_components') as $allowed_component) {
-            $level->allowedComponents()->attach(json_decode($allowed_component)->key);
-        }
-
-        foreach ($request->get('inputs') as $input) {
-            $level->transputs()->create([
-                'name' => json_decode($input)->value,
-                'type' => Level::INPUT
-            ]);
-        }
-        foreach ($request->get('outputs') as $output) {
-            $level->transputs()->create([
-                'name' => json_decode($output)->value,
-                'type' => Level::OUTPUT
-            ]);
-        }
-
-        if ($request->exists('test_inputs')) {
-            for ($i = 0; $i < count($request->get('test_inputs')); $i++) {
-                $test = $level->tests()->create([
-                    'order' => $i
-                ]);
-
-                foreach ($request->get('test_inputs')[$i] as $transput => $value) {
-                    $test_value = $test->values()->make([
-                        'value' => $value == "on"
-                    ]);
-
-                    $test_value->transput()->associate(
-                        LevelTransput::where('level_id', $level->id)
-                            ->where('type', Level::INPUT)
-                            ->where('name', $transput)->first()
-                    );
-
-                    $test_value->save();
-                }
-                foreach ($request->get('test_outputs')[$i] as $transput => $value) {
-                    $test_value = $test->values()->make([
-                        'value' => $value == "on"
-                    ]);
-
-                    $test_value->transput()->associate(
-                        LevelTransput::where('level_id', $level->id)
-                            ->where('type', Level::OUTPUT)
-                            ->where('name', $transput)->first()
-                    );
-
-                    $test_value->save();
-                }
-            }
-        }
+        $level->createAllowedComponentsFromRequest($request)
+            ->createTransputsFromRequest($request)
+            ->createTestsFromRequest($request);
 
         return redirect($level->url);
     }
@@ -98,6 +51,21 @@ class LevelController extends Controller
         $logical_components = LogicalComponent::all();
 
         return view('levels.edit', compact('level', 'logical_components'));
+    }
+
+    public function update(Request $request)
+    {
+        $level = Level::updateFrom($request->only(['title', 'description', 'visible_tests_count']));
+
+        $level->allowedComponents()->delete();
+        $level->transputs()->delete();
+        $level->tests()->delete();
+
+        $level->createAllowedComponentsFromRequest($request)
+            ->createTransputsFromRequest($request)
+            ->createTestsFromRequest($request);
+
+        return redirect($level->url);
     }
 
     public function destroy(Level $level)
