@@ -21,7 +21,7 @@ return new class extends Migration {
 
             $table->timestamps();
 
-            $table->foreign('level_id')->on('levels')->references('id')
+            $table->foreign('level_id')->references('id')->on('levels')
                 ->onDelete('cascade');
         });
     }

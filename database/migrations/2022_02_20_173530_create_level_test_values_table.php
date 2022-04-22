@@ -15,9 +15,9 @@ class CreateLevelTestValuesTable extends Migration
             $table->foreignId('level_transput_id');
             $table->foreignId('level_test_id');
 
-            $table->foreign('level_transput_id')->on('level_transputs')->references('id')
+            $table->foreign('level_transput_id')->references('id')->on('level_transputs')
                 ->onDelete('cascade');
-            $table->foreign('level_test_id')->on('level_tests')->references('id')
+            $table->foreign('level_test_id')->references('id')->on('level_tests')
                 ->onDelete('cascade');
         });
     }
