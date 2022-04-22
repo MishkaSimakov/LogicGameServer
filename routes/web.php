@@ -3,7 +3,6 @@
 use App\Http\Controllers\LevelController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,8 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome')->name('main');
-Route::view('/download', 'download')->name('download');
+//Route::view('/download', 'download')->name('download');
 
 Route::resource('level', LevelController::class)->middleware('auth');
 
@@ -24,3 +22,6 @@ Route::get('level/{level}/moveup', [LevelController::class, 'moveUp'])->middlewa
 Route::get('level/{level}/movedown', [LevelController::class, 'moveDown'])->middleware('auth')->name('level.move-down');
 
 Auth::routes(['register' => false, 'reset' => false, 'confirm' => false]);
+
+
+Route::redirect('/', route('level.index'));

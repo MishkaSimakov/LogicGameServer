@@ -23,7 +23,7 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ route("level.index") }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -41,9 +41,9 @@
                         </li>
                     @endauth
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('download') }}">Скачать</a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="{{ route('download') }}">Скачать</a>--}}
+{{--                    </li>--}}
                 </ul>
 
                 <!-- Right Side Of Navbar -->
